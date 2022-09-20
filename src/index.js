@@ -1,4 +1,5 @@
 const express = require('express');
+const { nanoid } = require('nanoid');
 const bodyParser = require('body-parser');
 const readJSON = require('./helpers/read');
 
@@ -34,6 +35,13 @@ app.get('/talker/:id', (req, res) => {
   res
     .status(HTTP_NOT_FOUND_STATUS)
     .json({ message: 'Pessoa palestrante não encontrada' });
+});
+
+// req3: post para login
+app.post('/login', (req, res) => {
+  let login = { email: 'email@email.com', password: '123456' };
+  login = nanoid(16);
+  res.status(HTTP_OK_STATUS).json({ token: login });
 });
 
 app.listen(PORT, () => {
