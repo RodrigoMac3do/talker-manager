@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 
 const HTTP_OK_STATUS = 200;
 const HTTP_NOT_FOUND_STATUS = 404;
+const HTTP_NO_CONTENT_STATUS = 204;
 const PORT = '3000';
 
 // não remova esse endpoint, e para o avaliador funcionar
@@ -44,6 +45,18 @@ app.post('/login', validateEmail, validatePassword, (req, res) => {
   let login = { email: 'email@email.com', password: '123456' };
   login = nanoid(16);
   res.status(HTTP_OK_STATUS).json({ token: login });
+});
+
+// req 7: delete para apagar palestrante por id
+app.delete('/talker/:id', (req, res) => {
+  const talkers = readJSON();
+  const id = Number(req.params.id);
+  const talker = talkers.find((talk) => talk.id === id);
+  if (talker) {
+    const index = talkers.indexOf(talker);
+    talkers.splice(index, 1);
+  }
+  res.sendStatus(HTTP_NO_CONTENT_STATUS);
 });
 
 app.listen(PORT, () => {
