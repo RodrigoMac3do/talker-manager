@@ -4,23 +4,28 @@ const bodyParser = require('body-parser');
 const readJSON = require('./helpers/read');
 const validateEmail = require('./middlewares/validationEmail');
 const validatePassword = require('./middlewares/validationPassword');
+const auth = require('./middlewares/authorization');
+const validateName = require('./middlewares/validationName');
+const validateAge = require('./middlewares/validationAge');
+const validateTalk = require('./middlewares/validationTalk');
 
 const app = express();
 app.use(bodyParser.json());
 
 const HTTP_OK_STATUS = 200;
+const HTTP_CREATED_STATUS = 201;
 const HTTP_NOT_FOUND_STATUS = 404;
+// const HTTP_BAD_REQUEST_STATUS = 400;
 const HTTP_NO_CONTENT_STATUS = 204;
 const PORT = '3000';
-
+const talkers = readJSON();
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
 // req 1: get para pegar informações de palestrantes cadastrados
-app.get('/talker', (req, res) => {
-  const talkers = readJSON();
+app.get('/talker', (_req, res) => {
   if (!talkers) {
     res.status(HTTP_OK_STATUS).json([]);
   }
@@ -29,7 +34,6 @@ app.get('/talker', (req, res) => {
 
 // req 2: get pega informações de palestrantes por id
 app.get('/talker/:id', (req, res) => {
-  const talkers = readJSON();
   const id = Number(req.params.id);
   const talker = talkers.find((talk) => talk.id === id);
   if (talker) {
@@ -47,9 +51,25 @@ app.post('/login', validateEmail, validatePassword, (req, res) => {
   res.status(HTTP_OK_STATUS).json({ token: login });
 });
 
+// req 5: post para talker
+app.post(
+  '/talker',
+  auth,
+  validateName,
+  validateAge,
+  validateTalk,
+  (req, res) => {
+    const talker = {
+      id: talkers.length + 1,
+      ...req.body,
+    };
+    talkers.push(talker);
+    res.status(HTTP_CREATED_STATUS).json(talker);
+  },
+);
+
 // req 7: delete para apagar palestrante por id
 app.delete('/talker/:id', (req, res) => {
-  const talkers = readJSON();
   const id = Number(req.params.id);
   const talker = talkers.find((talk) => talk.id === id);
   if (talker) {
