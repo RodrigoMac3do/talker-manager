@@ -69,12 +69,14 @@ app.post(
 );
 
 // req 7: delete para apagar palestrante por id
-app.delete('/talker/:id', auth, (req, res) => {
+app.delete('/talker/:id', auth, async (req, res) => {
   const id = Number(req.params.id);
+  const talkers = await readJSON();
   const talker = talkers.find((talk) => talk.id === id);
   if (talker) {
     const index = talkers.indexOf(talker);
     talkers.splice(index, 1);
+    fs.writeFileSync('./src/talker.json', JSON.stringify(talkers));
   }
   res.sendStatus(HTTP_NO_CONTENT_STATUS);
 });
