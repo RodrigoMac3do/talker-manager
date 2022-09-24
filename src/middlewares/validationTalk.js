@@ -4,8 +4,8 @@ const validateRate = (rate) => {
   if (rate === undefined) {
     throw new Error('O campo "rate" é obrigatório');
   }
-  if (rate < 1 || rate > 5) {
-    console.log('tamanho rate', rate);
+  const valid = /^[1-5]{1,1}$/.test(rate);
+  if (!valid) {
     throw new Error('O campo "rate" deve ser um inteiro de 1 à 5');
   }
 };
