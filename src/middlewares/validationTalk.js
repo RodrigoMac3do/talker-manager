@@ -31,7 +31,7 @@ const validateTalk = (req, res, next) => {
   }
   try {
     validateRate(talk.rate);
-    // validateWatchedAt(talk.watchedAt);
+    validateWatchedAt(talk.watchedAt);
   } catch (error) {
     return res.status(HTTP_BAD_REQUEST_STATUS).json({ message: error.mesage });
   }
