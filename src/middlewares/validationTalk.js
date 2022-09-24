@@ -10,16 +10,17 @@ const validateRate = (rate) => {
   }
 };
 
-// const validateWatchedAt = (watchedAt) => {
-//   if (!watchedAt) {
-//     throw new Error('O campo "watchedAt" é obrigatório');
-//   }
-//   if (
-//     watchedAt !== /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/
-//   ) {
-//     throw new Error('O campo "watchedAt" deve ter o formato "dd/mm/aaaa"');
-//   }
-// };
+const validateWatchedAt = (watchedAt) => {
+  if (!watchedAt) {
+    throw new Error('O campo "watchedAt" é obrigatório');
+  }
+  const valid = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/.test(
+      watchedAt,
+    );
+  if (!valid) {
+    throw new Error('O campo "watchedAt" deve ter o formato "dd/mm/aaaa"');
+  }
+};
 
 const validateTalk = (req, res, next) => {
   const { talk } = req.body;
