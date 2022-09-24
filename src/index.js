@@ -33,19 +33,20 @@ app.get('/talker', (_req, res) => {
 });
 
 // req 2: get pega informações de palestrantes por id
-app.get('/talker/:id', (req, res) => {
+app.get('/talker/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const talker = talkers.find((talk) => talk.id === id);
+  const talkers = await readJSON();
+  const talker = await talkers.find((talk) => talk.id === id);
   if (talker) {
-    res.status(HTTP_OK_STATUS).json(talker);
+    return res.status(HTTP_OK_STATUS).json(talker);
   }
-  res
+  return res
     .status(HTTP_NOT_FOUND_STATUS)
     .json({ message: 'Pessoa palestrante não encontrada' });
 });
 
 // req 3 e 4: post para login e middlewares de validação
-app.post('/login', validateEmail, validatePassword, (req, res) => {
+app.post('/login', validateEmail, validatePassword, (_req, res) => {
   let login = { email: 'email@email.com', password: '123456' };
   login = nanoid(16);
   res.status(HTTP_OK_STATUS).json({ token: login });
