@@ -58,12 +58,14 @@ app.post(
   validateName,
   validateAge,
   validateTalk,
-  (req, res) => {
+  async (req, res) => {
+    const talkers = await readJSON();
     const talker = {
       id: talkers.length + 1,
       ...req.body,
     };
     talkers.push(talker);
+    fs.writeFileSync('./src/talker.json', JSON.stringify(talkers));
     res.status(HTTP_CREATED_STATUS).json(talker);
   },
 );
