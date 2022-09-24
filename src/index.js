@@ -35,6 +35,22 @@ app.get('/talker', async (_req, res) => {
   }
 });
 
+// req 8: get com search
+app.get('/talker/search', auth, async (req, res) => {
+  const { q } = req.query;
+  const talkers = await readJSON();
+  if (!q) {
+    res.status(HTTP_OK_STATUS).json(talkers);
+  }
+  const talker = talkers.filter((talk) => talk.name.includes(q));
+  console.log(talker);
+  if (!talker) {
+    res.status(HTTP_OK_STATUS).json([]);
+  } else {
+    res.status(HTTP_OK_STATUS).json(talker);
+  }
+});
+
 // req 2: get pega informações de palestrantes por id
 app.get('/talker/:id', async (req, res) => {
   const id = Number(req.params.id);
