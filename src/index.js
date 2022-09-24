@@ -90,6 +90,27 @@ app.post(
   },
 );
 
+// req 6: put altera as informações de palestrantes por id
+app.put(
+  '/talker/:id',
+  auth,
+  validateName,
+  validateAge,
+  validateTalk,
+  async (req, res) => {
+    const talkers = await readJSON();
+    const id = Number(req.params.id);
+    const talker = await talkers.find((talk) => talk.id === id);
+    if (talker) {
+      const index = talkers.indexOf(talker);
+      const updated = { id, ...req.body };
+      talkers.splice(index, 1, updated);
+      fs.writeFileSync('./src/talker.json', JSON.stringify(talkers));
+      return res.status(HTTP_OK_STATUS).json(updated);
+    }
+  },
+);
+
 // req 7: delete para apagar palestrante por id
 app.delete('/talker/:id', auth, async (req, res) => {
   const id = Number(req.params.id);
