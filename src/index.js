@@ -25,11 +25,14 @@ app.get('/', (_request, response) => {
 });
 
 // req 1: get para pegar informações de palestrantes cadastrados
-app.get('/talker', (_req, res) => {
+app.get('/talker', async (_req, res) => {
+  const talkers = await readJSON();
   if (!talkers) {
-    res.status(HTTP_OK_STATUS).json([]);
+    return res.status(HTTP_OK_STATUS).send([]);
   }
-  res.status(HTTP_OK_STATUS).json(talkers);
+  if (talkers) {
+    return res.status(HTTP_OK_STATUS).json(talkers);
+  }
 });
 
 // req 2: get pega informações de palestrantes por id
