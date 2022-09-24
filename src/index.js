@@ -1,6 +1,7 @@
 const express = require('express');
-const { nanoid } = require('nanoid');
+const fs = require('fs');
 const bodyParser = require('body-parser');
+const { nanoid } = require('nanoid');
 const readJSON = require('./helpers/read');
 const validateEmail = require('./middlewares/validationEmail');
 const validatePassword = require('./middlewares/validationPassword');
@@ -15,10 +16,9 @@ app.use(bodyParser.json());
 const HTTP_OK_STATUS = 200;
 const HTTP_CREATED_STATUS = 201;
 const HTTP_NOT_FOUND_STATUS = 404;
-// const HTTP_BAD_REQUEST_STATUS = 400;
 const HTTP_NO_CONTENT_STATUS = 204;
 const PORT = '3000';
-const talkers = readJSON();
+
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
