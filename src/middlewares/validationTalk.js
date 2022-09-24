@@ -1,8 +1,7 @@
 const HTTP_BAD_REQUEST_STATUS = 400;
 
 const validateRate = (rate) => {
-  if (!rate) {
-    console.log('nao tem rate', rate);
+  if (rate === undefined) {
     throw new Error('O campo "rate" é obrigatório');
   }
   if (rate < 1 || rate > 5) {
