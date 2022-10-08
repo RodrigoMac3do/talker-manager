@@ -2,13 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const { nanoid } = require('nanoid');
-const readJSON = require('./helpers/read');
-const validateEmail = require('./middlewares/validationEmail');
-const validatePassword = require('./middlewares/validationPassword');
-const auth = require('./middlewares/authorization');
-const validateName = require('./middlewares/validationName');
-const validateAge = require('./middlewares/validationAge');
-const validateTalk = require('./middlewares/validationTalk');
+const middleware = require('./middlewares');
+const readJSON = require('./utils/read');
 
 const app = express();
 app.use(bodyParser.json());
@@ -36,7 +31,7 @@ app.get('/talker', async (_req, res) => {
 });
 
 // req 8: get com search
-app.get('/talker/search', auth, async (req, res) => {
+app.get('/talker/search', middleware.auth, async (req, res) => {
   const { q } = req.query;
   const talkers = await readJSON();
   if (!q) {
@@ -65,7 +60,7 @@ app.get('/talker/:id', async (req, res) => {
 });
 
 // req 3 e 4: post para login e middlewares de validação
-app.post('/login', validateEmail, validatePassword, (_req, res) => {
+app.post('/login', middleware.email, middleware.password, (_req, res) => {
   let login = { email: 'email@email.com', password: '123456' };
   login = nanoid(16);
   res.status(HTTP_OK_STATUS).json({ token: login });
@@ -74,10 +69,10 @@ app.post('/login', validateEmail, validatePassword, (_req, res) => {
 // req 5: post para talker
 app.post(
   '/talker',
-  auth,
-  validateName,
-  validateAge,
-  validateTalk,
+  middleware.auth,
+  middleware.name,
+  middleware.age,
+  middleware.talk,
   async (req, res) => {
     const talkers = await readJSON();
     const talker = {
@@ -93,10 +88,10 @@ app.post(
 // req 6: put altera as informações de palestrantes por id
 app.put(
   '/talker/:id',
-  auth,
-  validateName,
-  validateAge,
-  validateTalk,
+  middleware.auth,
+  middleware.name,
+  middleware.age,
+  middleware.talk,
   async (req, res) => {
     const talkers = await readJSON();
     const id = Number(req.params.id);
@@ -112,7 +107,7 @@ app.put(
 );
 
 // req 7: delete para apagar palestrante por id
-app.delete('/talker/:id', auth, async (req, res) => {
+app.delete('/talker/:id', middleware.auth, async (req, res) => {
   const id = Number(req.params.id);
   const talkers = await readJSON();
   const talker = talkers.find((talk) => talk.id === id);
