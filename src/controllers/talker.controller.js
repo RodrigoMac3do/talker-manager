@@ -5,6 +5,17 @@ const listAll = async (_req, res, _next) => {
   res.status(200).json(talkers);
 };
 
+const findById = async (req, res, next) => {
+  const id = Number(req.params.id);
+  try {
+    const talker = await service.talker.findById(id);
+    res.status(200).json(talker);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   listAll,
+  findById,
 };
