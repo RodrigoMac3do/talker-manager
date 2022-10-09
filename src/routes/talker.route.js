@@ -1,8 +1,8 @@
 const express = require('express');
+const middleware = require('../middlewares');
 const controller = require('../controllers');
 
 const router = express.Router();
-const middleware = require('../middlewares');
 
 router.get('/', controller.talker.listAll);
 router.get('/search', middleware.auth, controller.talker.findByName);
