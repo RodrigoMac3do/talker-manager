@@ -23,7 +23,11 @@ const findByName = (q) => {
   return talker;
 };
 
-const insert = (file) => writerJson(file);
+const insert = (file) => {
+  const talker = writerJson(file);
+  
+  return talker;
+};
 
 module.exports = {
   listAll,
