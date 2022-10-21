@@ -22,14 +22,21 @@ const findByName = async (q) => {
   const talkers = await model.talker.listAll();
 
   if (!q) return talkers;
-  
+
   if (!talker) throw sendError(200, []);
 
   return talker;
+};
+
+const insert = async (talker) => {
+  const result = await model.talker.insert(talker);
+
+  return result;
 };
 
 module.exports = {
   listAll,
   findById,
   findByName,
+  insert,
 };
