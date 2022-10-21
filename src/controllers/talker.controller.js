@@ -28,8 +28,30 @@ const findByName = async (req, res, next) => {
   }
 };
 
+const insert = async (req, res, next) => {
+  try {
+    const talkers = await service.talker.listAll();
+    const talker = {
+      id: talkers.length + 1,
+      ...req.body,
+    };
+
+    talkers.push(talker);
+
+    await service.talker.insert(talkers);
+
+    res.status(201).json(talker);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const insertId = async (_req, _res, _next) => {};
+
 module.exports = {
   listAll,
   findById,
   findByName,
+  insert,
+  insertId,
 };
