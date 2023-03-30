@@ -1,10 +1,8 @@
 const model = require('../models');
-const sendError = require('../helpers/error');
+const httpException = require('../utils/http.exception');
 
-const listAll = async () => {
-  const talkers = await model.talker.listAll();
-
-  if (!talkers) throw sendError(200, []);
+const findAll = async () => {
+  const talkers = await model.talker.findAll();
 
   return talkers;
 };
@@ -12,31 +10,38 @@ const listAll = async () => {
 const findById = async (id) => {
   const talker = await model.talker.findById(id);
 
-  if (!talker) throw sendError(404, 'Pessoa palestrante não encontrada');
-
   return talker;
 };
 
 const findByName = async (q) => {
   const talker = await model.talker.findByName(q);
-  const talkers = await model.talker.listAll();
+  const talkers = await model.talker.findAll();
 
   if (!q) return talkers;
 
-  if (!talker) throw sendError(200, []);
+  if (!talker) throw httpException(200, []);
 
   return talker;
 };
 
-const insert = async (talker) => {
-  const result = await model.talker.insert(talker);
+const create = async (body) => {
+  const talkers = await findAll();
 
-  return result;
+  const talker = {
+    id: talkers[talkers.length - 1].id + 1,
+    ...body,
+  };
+
+  talkers.push(talker);
+
+  await model.talker.create(talkers);
+
+  return talkers[talkers.length - 1];
 };
 
 module.exports = {
-  listAll,
+  findAll,
   findById,
   findByName,
-  insert,
+  create,
 };
