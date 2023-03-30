@@ -8,18 +8,20 @@
     "test:mocha": "nyc --all --include src mocha src/tests/integration/*.js --exit",
     "restore": "cp __tests__/seed.json src/talker.json",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js --ignore 'src/talker.json'",
+    "dev": "nodemon src/server.js --ignore 'src/talker.json'",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@joi/date": "^2.1.0",
     "body-parser": "1.19.0",
     "crypto-js": "4.0.0",
     "express": "4.17.1",
     "express-async-errors": "^3.1.1",
-    "express-rescue": "1.1.30"
+    "express-rescue": "1.1.30",
+    "joi": "^17.9.1"
   },
   "devDependencies": {
     "chai": "4.3.4",
