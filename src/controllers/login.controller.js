@@ -1,15 +1,17 @@
-const { nanoid } = require('nanoid');
+const service = require('../services');
+const { loginSchema } = require('../services/validations/schema');
+const validateSchema = require('../services/validations/validationSchema');
 
-const token = (req, res) => {
-  const { email, password } = req.body;
+const signIn = async (req, res) => {
+  const { body } = req;
 
-  let inputs = { email, password };
+  await validateSchema(loginSchema, body);
 
-  inputs = nanoid(16);
-  
-  return res.status(200).json({ token: inputs });
+  const token = service.login.signIn(body);
+
+  res.status(200).json({ token });
 };
 
 module.exports = {
-  token,
+  signIn,
 };
