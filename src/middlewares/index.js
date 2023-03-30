@@ -1,15 +1,7 @@
-const auth = require('./authorization');
-const age = require('./validationAge');
-const email = require('./validationEmail');
-const name = require('./validationName');
-const password = require('./validationPassword');
-const talk = require('./validationTalk');
+const auth = require('./auth.middleware');
+const httpErrorMiddleware = require('./http.error.middleware');
 
 module.exports = {
   auth,
-  age,
-  email,
-  name,
-  password,
-  talk,
+  httpErrorMiddleware,
 };
