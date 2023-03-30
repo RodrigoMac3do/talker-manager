@@ -4,16 +4,12 @@ const controller = require('../controllers');
 
 const router = express.Router();
 
-router.get('/', controller.talker.listAll);
+router.get('/', controller.talker.findAll);
+
 router.get('/search', middleware.auth, controller.talker.findByName);
+
 router.get('/:id', controller.talker.findById);
-router.post(
-  '/',
-  middleware.auth,
-  middleware.name,
-  middleware.age,
-  middleware.talk,
-  controller.talker.insert,
-);
+
+router.post('/', middleware.auth, controller.talker.create);
 
 module.exports = router;
