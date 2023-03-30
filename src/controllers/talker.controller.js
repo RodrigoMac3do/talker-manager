@@ -1,20 +1,19 @@
 const service = require('../services');
+const { talkerSchema } = require('../services/validations/schema');
+const validateSchema = require('../services/validations/validationSchema');
 
-const listAll = async (_req, res, _next) => {
-  const talkers = await service.talker.listAll();
+const findAll = async (_req, res) => {
+  const talkers = await service.talker.findAll();
 
   res.status(200).json(talkers);
 };
 
-const findById = async (req, res, next) => {
+const findById = async (req, res) => {
   const id = Number(req.params.id);
 
-  try {
-    const talker = await service.talker.findById(id);
-    res.status(200).json(talker);
-  } catch (error) {
-    next(error);
-  }
+  const talker = await service.talker.findById(id);
+
+  res.status(200).json(talker);
 };
 
 const findByName = async (req, res, next) => {
@@ -28,30 +27,19 @@ const findByName = async (req, res, next) => {
   }
 };
 
-const insert = async (req, res, next) => {
-  try {
-    const talkers = await service.talker.listAll();
-    const talker = {
-      id: talkers.length + 1,
-      ...req.body,
-    };
+const create = async (req, res) => {
+  const { body } = req;
 
-    talkers.push(talker);
+  await validateSchema(talkerSchema, body);
 
-    await service.talker.insert(talkers);
+  const talker = await service.talker.create(body);
 
-    res.status(201).json(talker);
-  } catch (error) {
-    next(error);
-  }
+  res.status(201).json(talker);
 };
 
-const insertId = async (_req, _res, _next) => {};
-
 module.exports = {
-  listAll,
+  findAll,
   findById,
   findByName,
-  insert,
-  insertId,
+  create,
 };
