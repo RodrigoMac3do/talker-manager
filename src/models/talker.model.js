@@ -26,7 +26,7 @@ const findByName = async (q) => {
   return talker;
 };
 
-const create = (file) => {
+const writer = (file) => {
   const talker = writerJson(file);
 
   return talker;
@@ -35,6 +35,6 @@ const create = (file) => {
 module.exports = {
   findAll,
   findById,
-  create,
+  writer,
   findByName,
 };
