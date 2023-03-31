@@ -37,9 +37,18 @@ const create = async (req, res) => {
   res.status(201).json(talker);
 };
 
+const remove = async (req, res) => {
+  const id = Number(req.params.id);
+
+  await service.talker.remove(id);
+
+  res.sendStatus(204);
+};
+
 module.exports = {
   findAll,
   findById,
   findByName,
   create,
+  remove,
 };
