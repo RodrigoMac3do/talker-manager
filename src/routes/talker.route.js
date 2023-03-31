@@ -12,4 +12,6 @@ router.get('/:id', controller.talker.findById);
 
 router.post('/', middleware.auth, controller.talker.create);
 
+router.delete('/:id', middleware.auth, controller.talker.remove);
+
 module.exports = router;
