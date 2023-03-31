@@ -1,0 +1,148 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Talker Manager",
+    "dateExported": "2023-03-31T03:33:41.254Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "cded1ec6-c872-461a-a0b8-9785653df7d8",
+            "colId": "63fa2d25-98c8-400b-8276-8d0f23c98820",
+            "containerId": "",
+            "name": "Faz listagem de pessoas palestrantes",
+            "url": "http://localhost:3000/talker",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-03-30T20:11:54.768Z",
+            "modified": "2023-03-30T20:12:13.789Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "efe014db-f5f7-416d-a085-3bb92e78fed7",
+            "colId": "63fa2d25-98c8-400b-8276-8d0f23c98820",
+            "containerId": "",
+            "name": "Faz listagem de pessoa palestrante por id",
+            "url": "http://localhost:3000/talker/1",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-03-30T20:22:21.256Z",
+            "modified": "2023-03-30T20:45:12.212Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "16767fae-c6d2-4f57-b42b-8629a4cbb271",
+            "colId": "63fa2d25-98c8-400b-8276-8d0f23c98820",
+            "containerId": "",
+            "name": "Faz listagem de pessoa palestrante por termo",
+            "url": "http://localhost:3000/talker/search?q=He",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2023-03-31T00:03:12.381Z",
+            "modified": "2023-03-31T03:29:21.122Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "e7xSdCXvOjNLWxcZ"
+                }
+            ],
+            "params": [
+                {
+                    "name": "q",
+                    "value": "He",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "ff1ee533-5dd6-4202-8fc3-4eaf8cb9d927",
+            "colId": "63fa2d25-98c8-400b-8276-8d0f23c98820",
+            "containerId": "",
+            "name": "Login na aplicação",
+            "url": "http://localhost:3000/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-03-30T20:47:22.564Z",
+            "modified": "2023-03-30T21:27:40.573Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"email@email.com\",\n  \"password\": \"123456\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "2f7870fc-61e8-4fbf-a0d8-d9b2b75488d3",
+            "colId": "63fa2d25-98c8-400b-8276-8d0f23c98820",
+            "containerId": "",
+            "name": "Cadastro de nova pessoa palestrante",
+            "url": "http://localhost:3000/talker",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-03-30T21:31:54.839Z",
+            "modified": "2023-03-30T22:57:18.844Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "e7xSdCXvOjNLWxcZ"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Danielle Santos\",\n  \"age\": 18,   \n  \"talk\": {\n    \"watchedAt\": \"22/10/2019\",\n    \"rate\": 5\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "85d1e1c4-2ca2-4c30-84eb-5f0e45e42cf6",
+            "colId": "63fa2d25-98c8-400b-8276-8d0f23c98820",
+            "containerId": "",
+            "name": "Atualização de pessoa palestrante",
+            "url": "http://localhost:3000/talker/1",
+            "method": "PUT",
+            "sortNum": 45000,
+            "created": "2023-03-31T00:42:52.743Z",
+            "modified": "2023-03-31T03:04:11.911Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "e7xSdCXvOjNLWxcZ"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Danielle Santos\",\n  \"age\": 18,   \n  \"talk\": {\n    \"watchedAt\": \"22/10/2019\",\n    \"rate\": 2\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "32227942-e574-4295-bfe1-fcd996d3e319",
+            "colId": "63fa2d25-98c8-400b-8276-8d0f23c98820",
+            "containerId": "",
+            "name": "Remove pessoa palestrante",
+            "url": "http://localhost:3000/talker/2",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2023-03-30T23:20:24.844Z",
+            "modified": "2023-03-30T23:45:37.226Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "e7xSdCXvOjNLWxcZ"
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
