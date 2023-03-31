@@ -34,9 +34,19 @@ const create = async (body) => {
 
   talkers.push(talker);
 
-  await model.talker.create(talkers);
+  await model.talker.writer(talkers);
 
   return talkers[talkers.length - 1];
+};
+
+const remove = async (id) => {
+  const talker = await findById(id);
+
+  const talkers = await findAll();
+
+  const a = talkers.filter((e) => e.id !== talker.id);
+
+  await model.talker.writer(a);
 };
 
 module.exports = {
@@ -44,4 +54,18 @@ module.exports = {
   findById,
   findByName,
   create,
+  remove,
 };
+
+// console.log(
+//   'antes splice',
+//   talkers.filter((e) => e.id !== talker.id),
+// );
+
+// const index = talkers.indexOf(talker);
+
+// console.log(index);
+
+// talkers.splice(index, 1);
+
+// console.log('depois splice', talkers);
