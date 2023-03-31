@@ -16,15 +16,12 @@ const findById = async (req, res) => {
   res.status(200).json(talker);
 };
 
-const findByName = async (req, res, next) => {
+const findByTerm = async (req, res) => {
   const { q } = req.query;
 
-  try {
-    const talker = await service.talker.findByName(q);
-    res.status(200).json(talker);
-  } catch (error) {
-    next(error);
-  }
+  const talker = await service.talker.findByTerm(q);
+
+  res.status(200).json(talker);
 };
 
 const create = async (req, res) => {
@@ -35,6 +32,17 @@ const create = async (req, res) => {
   const talker = await service.talker.create(body);
 
   res.status(201).json(talker);
+};
+
+const update = async (req, res) => {
+  const { body } = req;
+  const id = Number(req.params.id);
+
+  await validateSchema(talkerSchema, body);
+
+  const talkerUpdated = await service.talker.update(body, id);
+
+  res.status(200).json(talkerUpdated);
 };
 
 const remove = async (req, res) => {
@@ -48,7 +56,8 @@ const remove = async (req, res) => {
 module.exports = {
   findAll,
   findById,
-  findByName,
+  findByTerm,
   create,
+  update,
   remove,
 };
