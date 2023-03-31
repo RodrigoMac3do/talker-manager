@@ -37,31 +37,24 @@ const create = async (body) => {
 
 const update = async (body, id) => {
   const talkers = await findAll();
-  const talker = await findById(id);
 
-  const array = [];
+  const talkersUpdated = talkers.filter((talker) => talker.id !== id);
 
-  array.push(talker);
+  talkersUpdated.push({ id, ...body });
 
-  const index = talkers.indexOf(array);
+  model.talker.writer(talkersUpdated);
 
-  const updated = { id, ...body };
-
-  talkers.splice(index, 1, updated);
-
-  model.talker.writer(talkers);
-
-  return updated;
+  return findById(id);
 };
 
 const remove = async (id) => {
-  const talker = await findById(id);
+  await findById(id);
 
   const talkers = await findAll();
 
-  const a = talkers.filter((e) => e.id !== talker.id);
+  const talker = talkers.filter((elem) => elem.id !== id);
 
-  await model.talker.writer(a);
+  model.talker.writer(talker);
 };
 
 module.exports = {
