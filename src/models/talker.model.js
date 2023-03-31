@@ -18,7 +18,7 @@ const findById = async (id) => {
   return talker;
 };
 
-const findByName = async (q) => {
+const findByTerm = async (q) => {
   const talkers = await findAll();
 
   const talker = talkers.filter((talk) => talk.name.includes(q));
@@ -35,6 +35,6 @@ const writer = (file) => {
 module.exports = {
   findAll,
   findById,
+  findByTerm,
   writer,
-  findByName,
 };
