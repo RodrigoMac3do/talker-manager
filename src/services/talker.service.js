@@ -1,5 +1,4 @@
 const model = require('../models');
-const httpException = require('../utils/http.exception');
 
 const findAll = async () => {
   const talkers = await model.talker.findAll();
@@ -13,13 +12,10 @@ const findById = async (id) => {
   return talker;
 };
 
-const findByName = async (q) => {
-  const talker = await model.talker.findByName(q);
-  const talkers = await model.talker.findAll();
+const findByTerm = async (q) => {
+  if (!q) return findAll();
 
-  if (!q) return talkers;
-
-  if (!talker) throw httpException(200, []);
+  const talker = await model.talker.findByTerm(q);
 
   return talker;
 };
@@ -34,9 +30,28 @@ const create = async (body) => {
 
   talkers.push(talker);
 
-  await model.talker.writer(talkers);
+  model.talker.writer(talkers);
 
   return talkers[talkers.length - 1];
+};
+
+const update = async (body, id) => {
+  const talkers = await findAll();
+  const talker = await findById(id);
+
+  const array = [];
+
+  array.push(talker);
+
+  const index = talkers.indexOf(array);
+
+  const updated = { id, ...body };
+
+  talkers.splice(index, 1, updated);
+
+  model.talker.writer(talkers);
+
+  return updated;
 };
 
 const remove = async (id) => {
@@ -52,20 +67,8 @@ const remove = async (id) => {
 module.exports = {
   findAll,
   findById,
-  findByName,
+  findByTerm,
   create,
+  update,
   remove,
 };
-
-// console.log(
-//   'antes splice',
-//   talkers.filter((e) => e.id !== talker.id),
-// );
-
-// const index = talkers.indexOf(talker);
-
-// console.log(index);
-
-// talkers.splice(index, 1);
-
-// console.log('depois splice', talkers);
